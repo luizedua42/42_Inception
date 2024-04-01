@@ -1,12 +1,26 @@
 FROM debian:oldstable
 
-RUN apt update && apt instll -y wget \
-	php7.3 \
-	php-fpm \
-	php-mysql \
+RUN apt update && apt install -y wget\
+	lsb-release
+RUN wget -O /etc/apt/trusted.gpg.d/php.gpg https://packages.sury.org/php/apt.gpg\
+	&& echo "deb https://packages.sury.org/php/ $(lsb_release -sc) main" > /etc/apt/sources.list.d/php.list\
+	&& apt update
+RUN apt install -y php7.3 \
+	php7.3-fpm\ 
+	php7.3-mysql \
 	mariadb-client \
 	vim
 
-RUN wget https://wordpress.org/latest.tar.gz -P var/www \
+
+RUN wget https://wordpress.org/latest.tar.gz -P var/www
 RUN cd /var/www && tar -xvf latest.tar.gz && rm latest.tar.gz
 RUN chown -R root:root /var/www/wordpress
+COPY /conf/www.conf /etc/php/7.3/fpm/pool.d/www.conf
+
+COPY /conf/auto-config.sh /auto-config.sh
+RUN chmod +x /auto-config.sh
+RUN mkdir /run/php
+RUN ln -s $(find /usr/sbin -name 'php-fpm*') /usr/bin/php-fpm
+# RUN touch /var/www/wordpress/wp-config.php
+# ENTRYPOINT [ "./auto-config.sh" ]
+CMD [ "php-fpm", "-F"]
