@@ -9,6 +9,8 @@ RUN mkdir -p /run/mysqld
 RUN chmod 777 /var/run/mysqld
 RUN chmod 777 /run/mysqld
 RUN chmod +x ./scriptDB.sh
+# CMD [ "./scriptDB" ]
 
 
-ENTRYPOINT [ "bash" ]
+# ENTRYPOINT [ "bash" ]
+ENTRYPOINT [ "./scriptDB.sh" ]
