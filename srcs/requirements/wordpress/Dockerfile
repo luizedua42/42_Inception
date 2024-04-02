@@ -22,7 +22,7 @@ RUN chmod +x wp-cli.phar
 RUN mv wp-cli.phar /usr/local/bin/wp
 
 COPY conf/wp-config.php /var/www/wordpress/wp-config.php
-COPY /conf/auto-config.sh /auto-config.sh
+COPY conf/auto-config.sh /auto-config.sh
 RUN chmod +x /auto-config.sh
 RUN mkdir /run/php
 RUN ln -s $(find /usr/sbin -name 'php-fpm*') /usr/bin/php-fpm
