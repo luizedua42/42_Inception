@@ -5,16 +5,12 @@ RUN apt update && apt install -y nginx \
 	wget \
 	openssl
 
-RUN mkdir -p /etc/nginx/ssl
+RUN mkdir -p /etc/nginx/ssl && mkdir -p /var/www/html
 
 RUN openssl req -x509 -nodes \
 	-out etc/nginx/ssl/nginx-selfsigned.crt \
 	-keyout etc/nginx/ssl/nginx-selfsigned.key \
 	-subj "/C=BR/ST=SP/L=Sao Paulo/O=42/OU=42Student/CN=luizedua.42.fr"
-
-RUN mkdir -p /var/www/html
-
-COPY ./config/index.html /var/www/html/index.html
 
 COPY ./config/nginx.conf /etc/nginx/nginx.conf
 

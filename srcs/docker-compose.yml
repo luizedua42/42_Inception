@@ -19,38 +19,16 @@ volumes:
       o: bind
 
 services:
-#  mariadb:
-#    container_name: mariadb
-#    networks:
-#      - inception
-#    build:
-#      context: requirements/mariadb
-#      dockerfile: Dockerfile
-#    volumes:
-#      - mariadb:/var/lib/mysql
-#    restart: unless-stopped
-#    expose:
-#      - 3306
-#    env_file: .env
-#    environment:
-#        - DB_NAME=${DB_NAME}
-#        - DB_USER=${DB_USER}
-#        - DB_PASSWORD=${DB_PASSWORD}
   mariadb:
       build:
-        context: ./requirements/mariadb/
+        context: requirements/mariadb/
         args:
           - DB_NAME=${DB_NAME}
           - DB_USER=${DB_USER}
           - DB_PASSWORD=${DB_PASSWORD}
       image: mariadb:inception
       container_name: mariadb
-      restart: on-failure
-      healthcheck:
-        test: mysqladmin ping -h localhost -u root
-        interval: 3s
-        timeout: 3s
-        retries: 5
+      restart: on-failure5
       volumes:
         - mariadb-v:/var/lib/mysql
       networks:
