@@ -36,6 +36,7 @@ fclean: down volume-cleaner
 re: fclean all
 
 volume-cleaner:
+	sudo rm -rf /home/$(LOGIN)/data
 	@if [ -n "$$(docker volume ls -q)" ]; then \
 		docker volume rm $(shell docker volume ls -q); \
 		else echo "No volumes to remove"; \

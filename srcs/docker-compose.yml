@@ -5,17 +5,17 @@ networks:
     name: inception
     driver: bridge
 volumes:
-  wordpress:
+  wordpress-v:
     driver: local
     driver_opts:
       type: none
-      device: /home/user42/data/wordpress
+      device: /home/luizedua/data/wordpress
       o: bind
   mariadb-v:
     driver: local
     driver_opts:
       type: none
-      device: /home/user42/data/mariadb
+      device: /home/luizedua/data/mariadb
       o: bind
 
 services:
@@ -28,7 +28,7 @@ services:
           - DB_PASSWORD=${DB_PASSWORD}
       image: mariadb:inception
       container_name: mariadb
-      restart: on-failure5
+      restart: on-failure
       volumes:
         - mariadb-v:/var/lib/mysql
       networks:
@@ -59,7 +59,7 @@ services:
   wordpress:
     container_name: wordpress
     volumes:
-      - wordpress:/var/www/wordpress
+      - wordpress-v:/var/www/wordpress
     networks:
       - inception
     build:
